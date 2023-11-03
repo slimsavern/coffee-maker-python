@@ -71,21 +71,27 @@ def make_coffee(drink):
     global profit
     profit += drink['cost']
 
-def check_resources(drink):
-    make_drink = 1
-    if resources['water'] < drink['ingredients']['water']:
-        print("Sorry there isn't enough water to make this drink")
-        make_drink = 0
-    if resources['milk'] < drink['ingredients']['milk']:
-        print("Sorry there isn't enough milk to make this drink")
-        make_drink = 0
-    if resources['coffee'] < drink['ingredients']['coffee']:
-        print("Sorry there isn't enough water to make this drink")
-        make_drink = 0
+# def check_resources(drink):
+#     make_drink = 1
+#     if resources['water'] < drink['ingredients']['water']:
+#         print("Sorry there isn't enough water to make this drink")
+#         make_drink = 0
+#     if resources['milk'] < drink['ingredients']['milk']:
+#         print("Sorry there isn't enough milk to make this drink")
+#         make_drink = 0
+#     if resources['coffee'] < drink['ingredients']['coffee']:
+#         print("Sorry there isn't enough water to make this drink")
+#         make_drink = 0
+#
+#     return make_drink
+#
+#
+def check_resources(drink_ingredients):
 
-    return make_drink
-
-
+    for item in drink_ingredients:
+        if resources[item] < drink_ingredients[item]:
+            return False
+    return True
 
 print_resources()
 stop_coffee_machine = False
@@ -98,7 +104,7 @@ while not stop_coffee_machine:
         print_resources()
     else:
         chosen_drink = MENU[drink]
-        if check_resources(chosen_drink) == 1:
+        if check_resources(chosen_drink["ingredients"]) == True:
             if check_transaction(chosen_drink, process_coins()) == 1:
                 make_coffee(chosen_drink)
 
